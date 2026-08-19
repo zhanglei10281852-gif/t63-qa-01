@@ -98,9 +98,11 @@ func (d Driver) Reactivate(now time.Time) (Driver, error) {
 }
 func (d Driver) Clone() Driver {
 	result := d
-	result.Certifications = d.Certifications
-	for index := range result.Certifications {
-		result.Certifications[index].DriverID = d.ID
+	items := make([]Certification, len(d.Certifications))
+	for index := range items {
+		items[index] = d.Certifications[index]
+		items[index].DriverID = d.ID
 	}
+	result.Certifications = items
 	return result
 }
